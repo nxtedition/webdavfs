@@ -384,7 +384,6 @@ func (nd *Node) Getattr(ctx context.Context, req *fuse.GetattrRequest, resp *fus
 				Atime: atime,
 				Mtime: mtime,
 				Ctime: ctime,
-				Crtime: ctime,
 				Mode: mode,
 				Nlink: 1,
 				Uid: FS.Uid,
@@ -587,8 +586,7 @@ func (nd *Node) Setattr(ctx context.Context, req *fuse.SetattrRequest, resp *fus
 		return
 	}
 	invalid := fuse.SetattrMode | fuse. SetattrUid | fuse.SetattrGid |
-		fuse.SetattrBkuptime | fuse.SetattrCrtime | fuse.SetattrChgtime |
-		fuse.SetattrFlags | fuse.SetattrHandle
+		fuse.SetattrHandle
 	v := req.Valid
 	if attrSet(v, invalid) {
 		if trace(T_FUSE) {
@@ -646,7 +644,6 @@ func (nd *Node) Setattr(ctx context.Context, req *fuse.SetattrRequest, resp *fus
 		Atime: atime,
 		Mtime: mtime,
 		Ctime: ctime,
-		Crtime: ctime,
 		Mode: mode,
 		Nlink: 1,
 		Uid: FS.Uid,

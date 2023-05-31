@@ -290,13 +290,9 @@ func main() {
 	fmo := []fuse.MountOption{
 		fuse.FSName(url),
 		fuse.Subtype("webdavfs"),
-		fuse.VolumeName(url),
 		fuse.MaxReadahead(1024 * 1024),
 	}
 
-	if mountOpts.AllowRoot {
-		fmo = append(fmo, fuse.AllowRoot())
-	}
 	if mountOpts.AllowOther {
 		fmo = append(fmo, fuse.AllowOther())
 	}
@@ -329,12 +325,6 @@ func main() {
 
 	err = fs.Serve(c, NewFS(dav, config))
 	if err != nil {
-		fatal(err.Error())
-	}
-
-	// check if the mount process has an error to report
-	<-c.Ready
-	if err := c.MountError; err != nil {
 		fatal(err.Error())
 	}
 }
